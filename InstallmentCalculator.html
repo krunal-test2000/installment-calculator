@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installment Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #e3f2fd, #ffffff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #1976d2;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      background-color: #1976d2;
+      color: #fff;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #125ea2;
+    }
+
+    .results {
+      margin-top: 20px;
+      background: #f1f8ff;
+      padding: 15px;
+      border-radius: 10px;
+      color: #0d47a1;
+      font-size: 16px;
+    }
+
+    .results span {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Installment Calculator</h2>
+
+    <label>Total Amount (pence):</label>
+    <input type="number" id="totalAmount" value="100000">
+
+    <label>Tenure (months):</label>
+    <input type="number" id="tenure" value="18">
+
+    <label>Interest Amount (pence):</label>
+    <input type="number" id="interest" value="2675">
+
+    <label>Insurance Percentage (%):</label>
+    <input type="number" id="insurance" value="10">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="results">
+      <p>First Instalment: <span id="firstInstalment">--</span> GBP</p>
+      <p>Regular Instalments: <span id="regularInstalment">--</span> GBP</p>
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      const totalAmount = parseInt(document.getElementById("totalAmount").value);
+      const tenure = parseInt(document.getElementById("tenure").value);
+      const interest = parseInt(document.getElementById("interest").value);
+      const insurancePercent = parseFloat(document.getElementById("insurance").value);
+
+      const firstInstalmentBase = totalAmount * (insurancePercent / 100);
+      const remainingAmount = totalAmount - firstInstalmentBase;
+
+      const remainder = remainingAmount % (tenure - 1);
+
+      const regularInstalment = (remainingAmount - remainder + interest) / (tenure - 1);
+      const firstInstalment = firstInstalmentBase + remainder;
+
+      document.getElementById("firstInstalment").innerText = (firstInstalment / 100).toFixed(2);
+      document.getElementById("regularInstalment").innerText = (regularInstalment / 100).toFixed(2);
+    }
+  </script>
+</body>
+</html>
